@@ -4,9 +4,9 @@ import { socialLinks } from "./config";
 export default function Page() {
   return (
     <section>
-      <a href={socialLinks.twitter} target="_blank">
+      <a href={socialLinks.twitter} target="https://x.com/SamuielZ">
         <Image
-          src="/profile.png"
+          src="/photo.jpg"
           alt="Profile photo"
           className="rounded-full bg-gray-100 block lg:mt-5 mt-0 lg:mb-5 mb-10 mx-auto sm:float-right sm:ml-5 sm:mb-5 grayscale hover:grayscale-0"
           unoptimized
@@ -16,26 +16,25 @@ export default function Page() {
         />
       </a>
       <h1 className="mb-8 text-2xl font-medium tracking-tight">
-        Portfolio template!
+        Sammy's
       </h1>
       <div className="prose prose-neutral dark:prose-invert">
         <p>
-          A clean, fast, and lightweight portfolio template built with Next.js,
-          Vercel, and Tailwind CSS.
+        Hi! I'm Samuel, a highly skilled full-stack web developer specializing in React and Next.js. 
+        I build high-performance, scalable, and user-centric web applications that deliver seamless user experiences. 
         </p>
         <p>
-          Nextfolio has everything you need for a portfolio: MDX blog, SEO, RSS,
-          Atom & JSON feeds, analytics, Tweet & YouTube embeds, KaTeX and {""}
+        With a strong foundation in modern web technologies and database management, I craft efficient, maintainable, and future-proof solutions. Passionate about clean code and best practices, I continuously explore new advancements to create innovative digital experiences that drive results.{""}
           <a
             target="_blank"
-            href="https://github.com/1msirius/Nextfolio?tab=readme-ov-file#features"
+            href="github.com/sammyabebe"
           >
             more
           </a>
           .
         </p>
-        <p>
-          Nextfolio is{" "}
+        {/* <p>
+          Sammy Portfolio  is{" "}
           <a href={socialLinks.github} target="_blank">
             open-source
           </a>{" "}
@@ -51,11 +50,11 @@ export default function Page() {
           your Nextfolio site with Vercel in minutes and follow the set up
           instructions in the{" "}
           <a href="/blog/getting-started">Getting Started</a> post.
-        </p>
+        </p> */}
         <p>
           Built and maintained by{" "}
-          <a href="https://imsirius.xyz/" target="_blank">
-            Sirius
+          <a href="#" target="_blank">
+            Sammy
           </a>
           .
         </p>

@@ -12,15 +12,19 @@ type Metadata = {
 function parseFrontmatter(fileContent: string) {
   let frontmatterRegex = /---\s*([\s\S]*?)\s*---/;
   let match = frontmatterRegex.exec(fileContent);
-  let frontMatterBlock = match![1];
+  if (!match) {
+    throw new Error("Invalid frontmatter format");
+  }
+  let frontMatterBlock = match[1];
   let content = fileContent.replace(frontmatterRegex, "").trim();
   let frontMatterLines = frontMatterBlock.trim().split("\n");
   let metadata: Partial<Metadata> = {};
 
   frontMatterLines.forEach((line) => {
     let [key, ...valueArr] = line.split(": ");
+    if (!key || valueArr.length === 0) return;
     let value = valueArr.join(": ").trim();
-    value = value.replace(/^['"](.*)['"]$/, "$1"); 
+    value = value.replace(/^['"](.*)['"]$/, "$1");
     metadata[key.trim() as keyof Metadata] = value;
   });
 
@@ -28,7 +32,7 @@ function parseFrontmatter(fileContent: string) {
 }
 
 function getMDXFiles(dir: string) {
-  return fs.readdirSync(dir).filter((file) => path.extname(file) === ".mdx");
+  return fs.existsSync(dir) ? fs.readdirSync(dir).filter((file) => path.extname(file) === ".mdx") : [];
 }
 
 function readMDXFile(filePath: string) {
@@ -54,12 +58,22 @@ export function getBlogPosts() {
   return getMDXData(path.join(process.cwd(), "content"));
 }
 
-export function formatDate(date: string, includeRelative = false) {
+export function formatDate(date: string | undefined, includeRelative = false) {
+  if (!date) {
+    console.error("formatDate received an undefined or empty value");
+    return "Unknown Date";
+  }
+
   let currentDate = new Date();
   if (!date.includes("T")) {
     date = `${date}T00:00:00`;
   }
   let targetDate = new Date(date);
+
+  if (isNaN(targetDate.getTime())) {
+    console.error("Invalid date format provided to formatDate:", date);
+    return "Invalid Date";
+  }
 
   let yearsAgo = currentDate.getFullYear() - targetDate.getFullYear();
   let monthsAgo = currentDate.getMonth() - targetDate.getMonth();
@@ -83,9 +97,5 @@ export function formatDate(date: string, includeRelative = false) {
     year: "numeric",
   });
 
-  if (!includeRelative) {
-    return fullDate;
-  }
-
-  return `${fullDate} (${formattedDate})`;
+  return includeRelative ? `${fullDate} (${formattedDate})` : fullDate;
 }
